@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { ChevronDown, Filter } from "lucide-react"
+import { ChevronDown, Filter, Search} from "lucide-react"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -43,7 +43,7 @@ export default function FilterDropdown() {
         </div>
         <div className="max-h-[300px] overflow-auto py-1">
           {categories.map((category) => (
-            <div
+            <button
               key={category.id}
               className="flex items-center px-2 py-1.5 hover:bg-gray-900 cursor-pointer"
               onClick={() => {
@@ -60,12 +60,10 @@ export default function FilterDropdown() {
                 {selectedCategory === category.id && <div className="h-2 w-2 rounded-full bg-white" />}
               </div>
               <span className="text-sm">{category.label}</span>
-            </div>
+            </button>
           ))}
         </div>
       </PopoverContent>
     </Popover>
   )
 }
-
-import { Search } from "lucide-react"

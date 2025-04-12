@@ -11,7 +11,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { ArrowRight, Grid2X2, Grid3X3, List } from "lucide-react";
+import { Grid2X2, Grid3X3, List, Upload } from "lucide-react";
 import { useDebounce } from "@/hooks/use-debounce";
 import { useDownloadedItems } from "@/hooks/use-downloads";
 import type { Resource } from "@prisma/client";
@@ -21,7 +21,7 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 
 interface ResourceGridProps {
-  resources: Resource[];
+  readonly resources: Resource[];
 }
 
 const ITEMS_PER_PAGE_OPTIONS = [18, 27, 36, 45];
@@ -65,7 +65,7 @@ export function ResourceGrid({ resources }: ResourceGridProps) {
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [resourceType, setResourceType] = useState<string>("all");
+  const [resourceType, _] = useState<string>("all");
   const [sortOption, setSortOption] = useState<SortOption>("date-desc");
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
@@ -251,13 +251,12 @@ export function ResourceGrid({ resources }: ResourceGridProps) {
             Try adjusting your search or filter settings.
           </p>
 
-          <motion.div variants={itemVariants} className="w-full lg:w-auto">
-            <Button asChild size="lg" className="w-full lg:w-auto text-base">
-              <Link href="/upload" className="flex items-center justify-center">
-                <span>Upload a Resource</span>
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
+          <motion.div variants={itemVariants} className="w-full lg:w-auto mt-4">
+            <div className="flex flex-col gap-4 items-center">
+              <Button asChild>
+                <Link href="/upload">Upload Initial Resource</Link>
+              </Button>
+            </div>
           </motion.div>
         </motion.div>
       ) : (
@@ -305,8 +304,8 @@ function LayoutToggle({
   layoutType,
   onChange,
 }: {
-  layoutType: LayoutType;
-  onChange: (value: LayoutType) => void;
+  readonly layoutType: LayoutType;
+  readonly onChange: (value: LayoutType) => void;
 }) {
   return (
     <TooltipProvider>
@@ -314,11 +313,30 @@ function LayoutToggle({
         type="single"
         value={layoutType}
         onValueChange={onChange}
-        className="bg-background/50 backdrop-blur-sm border rounded-md"
+        className="relative border rounded-md bg-background/50 backdrop-blur-sm shadow-sm"
       >
+        <motion.div
+          layoutId="activeLayoutIndicator"
+          className="absolute bottom-0 h-[3px] bg-primary z-10 transition-all duration-300"
+          style={{
+            width: "24px",
+            left:
+              layoutType === "compact"
+                ? "8px"
+                : layoutType === "grid"
+                ? "54px"
+                : "98px",
+          }}
+          transition={{ type: "spring", stiffness: 500, damping: 30 }}
+        />
+
         <Tooltip>
-          <TooltipTrigger>
-            <ToggleGroupItem value="compact">
+          <TooltipTrigger asChild>
+            <ToggleGroupItem
+              value="compact"
+              aria-label="Compact Grid View"
+              className="relative z-20 data-[state=on]:bg-primary/10 data-[state=on]:text-primary hover:bg-muted/70 transition-all"
+            >
               <Grid3X3 className="h-4 w-4" />
             </ToggleGroupItem>
           </TooltipTrigger>
@@ -326,8 +344,12 @@ function LayoutToggle({
         </Tooltip>
 
         <Tooltip>
-          <TooltipTrigger>
-            <ToggleGroupItem value="grid">
+          <TooltipTrigger asChild>
+            <ToggleGroupItem
+              value="grid"
+              aria-label="Grid View"
+              className="relative z-20 data-[state=on]:bg-primary/10 data-[state=on]:text-primary hover:bg-muted/70 transition-all"
+            >
               <Grid2X2 className="h-4 w-4" />
             </ToggleGroupItem>
           </TooltipTrigger>
@@ -335,12 +357,30 @@ function LayoutToggle({
         </Tooltip>
 
         <Tooltip>
-          <TooltipTrigger>
-            <ToggleGroupItem value="row">
+          <TooltipTrigger asChild>
+            <ToggleGroupItem
+              value="row"
+              aria-label="Row View"
+              className="relative z-20 data-[state=on]:bg-primary/10 data-[state=on]:text-primary hover:bg-muted/70 transition-all"
+            >
               <List className="h-4 w-4" />
             </ToggleGroupItem>
           </TooltipTrigger>
           <TooltipContent>List View</TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger>
+            <ToggleGroupItem
+              value=""
+              aria-label="Upload Resource"
+              className="relative z-20 data-[state=on]:bg-primary/10 data-[state=on]:text-primary hover:bg-muted/70 transition-all"
+            >
+              <Link href="/upload">
+                <Upload className="h-4 w-4" />
+              </Link>
+            </ToggleGroupItem>
+          </TooltipTrigger>
+          <TooltipContent>Upload Resource</TooltipContent>
         </Tooltip>
       </ToggleGroup>
     </TooltipProvider>

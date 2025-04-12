@@ -11,13 +11,11 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { LayoutType } from "@/components/resource-card";
-import { getGridClasses } from "@/lib/helper";
 import Hero from "@/components/home-hero";
 import { SubmitCTA } from "@/components/cta-submit";
 import type { Resource } from "@prisma/client";
-import { ALLOWED_UNITS } from "@/lib/helper";
+import { ALLOWED_UNITS, getGridClasses } from "@/lib/helper";
 export default async function Home() {
-
   let resources: Resource[] = [];
   let error = null;
   function formatFallbackUnitName(value: string): string {
@@ -34,7 +32,7 @@ export default async function Home() {
       );
       return {
         ...item,
-        unitName: unit?.label || formatFallbackUnitName(item.unitName),
+        unitName: unit?.label ?? formatFallbackUnitName(item.unitName),
       };
     });
   } catch (err) {
@@ -59,7 +57,7 @@ export default async function Home() {
   );
 }
 
-function ErrorState({ error }: { error: Error }) {
+function ErrorState({ error }: { readonly error: Error }) {
   return (
     <div className="text-center py-12 space-y-6">
       <div className="max-w-2xl mx-auto">
@@ -84,7 +82,7 @@ function ErrorState({ error }: { error: Error }) {
 function ResourceGridSkeleton({
   layoutType = "grid",
 }: {
-  layoutType?: LayoutType;
+  readonly layoutType?: LayoutType;
 }) {
   const getCardHeightClass = () => {
     switch (layoutType) {

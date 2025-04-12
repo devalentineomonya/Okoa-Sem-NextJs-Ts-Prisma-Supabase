@@ -16,12 +16,12 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
 interface PaginationControlsProps {
-  currentPage: number;
-  totalPages: number;
-  itemsPerPage: number;
-  handlePageChange: (pageNumber: number) => void;
-  handleItemsPerPageChange: (value: string) => void;
-  itemsPerPageOptions: number[];
+  readonly currentPage: number;
+  readonly totalPages: number;
+  readonly itemsPerPage: number;
+  readonly handlePageChange: (pageNumber: number) => void;
+  readonly handleItemsPerPageChange: (value: string) => void;
+  readonly itemsPerPageOptions: number[];
 }
 
 export function PaginationControls({

@@ -25,7 +25,7 @@ function generateFileName(params: UploadParams, file: File): string {
   const safeUnitName = params.unitName.replace(/[^a-zA-Z0-9]/g, "_");
   const uniqueId = uuidv4().slice(0, 8);
   const fileExtension =
-    file.name.split(".").pop() || file.type.split("/").pop();
+    file.name.split(".").pop() ?? file.type.split("/").pop();
 
   if (params.resourceType === "lesson_notes") {
     return `${safeUnitName}_Lesson_Week${params.weekNumber}_${uniqueId}.${fileExtension}`;
@@ -33,7 +33,6 @@ function generateFileName(params: UploadParams, file: File): string {
 
   return `${safeUnitName}_PastPaper_${params.yearCompleted}_Sem${params.semester}_${uniqueId}.${fileExtension}`;
 }
-
 
 export async function uploadResource(formData: FormData) {
   try {
@@ -137,16 +136,4 @@ export async function getResources(): Promise<Resource[]> {
       : null,
     weekNumber: resource.weekNumber ? Number(resource.weekNumber) : null,
   }));
-}
-
-export async function getResourceById(id: string): Promise<Resource | null> {
-  serverOnly();
-
-  if (!/^[a-f0-9]{24}$/i.test(id)) {
-    throw new Error("Invalid resource ID format");
-  }
-
-  return prisma.resource.findUnique({
-    where: { id, isVerified: true },
-  });
 }

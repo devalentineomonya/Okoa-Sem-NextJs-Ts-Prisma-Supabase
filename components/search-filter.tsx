@@ -6,13 +6,13 @@ import type React from "react";
 import { useCallback } from "react";
 
 interface SearchFilterControlsProps {
-  searchQuery: string;
-  setSearchQuery: (query: string) => void;
-  categoryOptions: { label: string; value: string }[];
-  selectedCategories: string[];
-  setSelectedCategories: (categories: string[]) => void;
-  sortOption: SortOption;
-  onSortChange: (option: SortOption) => void;
+  readonly searchQuery: string;
+  readonly setSearchQuery: (query: string) => void;
+  readonly categoryOptions: { label: string; value: string }[];
+  readonly selectedCategories: string[];
+  readonly setSelectedCategories: (categories: string[]) => void;
+  readonly sortOption: SortOption;
+  readonly onSortChange: (option: SortOption) => void;
 }
 
 export function SearchFilterControls({

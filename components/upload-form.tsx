@@ -126,10 +126,6 @@ export function UploadForm() {
         if (data.semester) {
           formData.append("semester", data.semester);
         }
-      } else {
-        if (data.weekNumber) {
-          formData.append("weekNumber", data.weekNumber);
-        }
       }
 
       data.files.forEach((file) => {
@@ -146,7 +142,7 @@ export function UploadForm() {
         throw new Error(result.error || "Failed to upload resources");
       }
 
-      toast.success( "Resources uploaded successfully");
+      toast.success("Resources uploaded successfully");
 
       form.reset();
       router.push("/");
@@ -164,7 +160,7 @@ export function UploadForm() {
         ) {
           setStorageError(true);
         } else {
-          toast.error( error.message);
+          toast.error(error.message);
         }
       }
     } finally {
@@ -393,11 +389,9 @@ export function UploadForm() {
                       multiple
                       accept=".pdf,.doc,.docx,.ppt,.pptx"
                       onChange={(e) => {
-                        // Use Array.from to convert FileList to Array and update field
                         const files = Array.from(e.target.files || []);
                         const values = form.getValues();
                         const renamedFiles = files.map((file) => {
-                          // Build the new filename based on resource type and inputs
                           if (values.resourceType === "lesson_notes") {
                             return new File(
                               [file],
@@ -461,7 +455,6 @@ export function UploadForm() {
                         const newFiles = watchedFiles.filter(
                           (_, i) => i !== index
                         );
-                        newFiles;
                         form.setValue("files", newFiles);
                       }}
                     >

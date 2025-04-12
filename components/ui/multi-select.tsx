@@ -1,12 +1,6 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import {
-  CheckIcon,
-  XCircle,
-  ChevronDown,
-  XIcon,
-  WandSparkles,
-} from "lucide-react";
+import { CheckIcon, XCircle, ChevronDown, XIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
@@ -44,7 +38,7 @@ const multiSelectVariants = cva(
     defaultVariants: {
       variant: "default",
     },
-  },
+  }
 );
 
 interface MultiSelectProps
@@ -128,15 +122,15 @@ export const MultiSelect = React.forwardRef<
       className,
       ...props
     },
-    ref,
+    ref
   ) => {
     const [selectedValues, setSelectedValues] =
       React.useState<string[]>(defaultValue);
     const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
-    const [isAnimating, setIsAnimating] = React.useState(false);
+    const [isAnimating, _] = React.useState(false);
 
     const handleInputKeyDown = (
-      event: React.KeyboardEvent<HTMLInputElement>,
+      event: React.KeyboardEvent<HTMLInputElement>
     ) => {
       if (event.key === "Enter") {
         setIsPopoverOpen(true);
@@ -206,7 +200,7 @@ export const MultiSelect = React.forwardRef<
                         key={value}
                         className={cn(
                           isAnimating ? "animate-bounce" : "",
-                          multiSelectVariants({ variant }),
+                          multiSelectVariants({ variant })
                         )}
                         style={{ animationDuration: `${animation}s` }}
                       >
@@ -229,7 +223,7 @@ export const MultiSelect = React.forwardRef<
                       className={cn(
                         "bg-transparent text-foreground border-foreground/1 hover:bg-transparent",
                         isAnimating ? "animate-bounce" : "",
-                        multiSelectVariants({ variant }),
+                        multiSelectVariants({ variant })
                       )}
                       style={{ animationDuration: `${animation}s` }}
                     >
@@ -292,7 +286,7 @@ export const MultiSelect = React.forwardRef<
                       "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
                       selectedValues.length === options.length
                         ? "bg-primary text-primary-foreground"
-                        : "opacity-50 [&_svg]:invisible",
+                        : "opacity-50 [&_svg]:invisible"
                     )}
                   >
                     <CheckIcon className="h-4 w-4" />
@@ -312,7 +306,7 @@ export const MultiSelect = React.forwardRef<
                           "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
                           isSelected
                             ? "bg-primary text-primary-foreground"
-                            : "opacity-50 [&_svg]:invisible",
+                            : "opacity-50 [&_svg]:invisible"
                         )}
                       >
                         <CheckIcon className="h-4 w-4" />
@@ -355,7 +349,7 @@ export const MultiSelect = React.forwardRef<
         </PopoverContent>
       </Popover>
     );
-  },
+  }
 );
 
 MultiSelect.displayName = "MultiSelect";

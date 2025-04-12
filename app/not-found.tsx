@@ -12,7 +12,6 @@ const NotFound = () => {
   };
 
   return (
-    <>
       <motion.div
         className="m-auto min-h-screen flex justify-center items-center"
         initial={{ opacity: 0 }}
@@ -48,7 +47,6 @@ const NotFound = () => {
           </motion.div>
         </div>
       </motion.div>
-    </>
   );
 };
 
