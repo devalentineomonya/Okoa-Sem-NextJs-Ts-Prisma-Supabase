@@ -126,6 +126,10 @@ export function UploadForm() {
         if (data.semester) {
           formData.append("semester", data.semester);
         }
+      } else {
+        if (data.weekNumber) {
+          formData.append("weekNumber", data.weekNumber);
+        }
       }
 
       data.files.forEach((file) => {
@@ -142,7 +146,7 @@ export function UploadForm() {
         throw new Error(result.error || "Failed to upload resources");
       }
 
-      toast.success("Resources uploaded successfully");
+      toast.success( "Resources uploaded successfully");
 
       form.reset();
       router.push("/");
@@ -160,7 +164,7 @@ export function UploadForm() {
         ) {
           setStorageError(true);
         } else {
-          toast.error(error.message);
+          toast.error( error.message);
         }
       }
     } finally {
