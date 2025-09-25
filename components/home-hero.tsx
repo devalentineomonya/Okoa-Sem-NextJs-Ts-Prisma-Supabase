@@ -58,12 +58,12 @@ export default function Hero() {
       >
         Created by:
         <a
-          href="https://v3.devalentine.me/"
+          href="https://v3.valentinee.dev/"
           target="_blank"
           rel="noopener noreferrer"
           className="underline"
         >
-          devalentine.me
+          valentinee.dev
         </a>
       </motion.p>
     </motion.div>
